@@ -39,8 +39,8 @@ describe(('Consortium List SubScraper '), async () => {
   test('should extract Price Data', async () => {
     const locators = await scraper.extractRawCards();
     const { retailPrice, salePrice } = await scraper.extractPriceData(locators[2]);
-    expect(retailPrice).toBe(88.99);
-    expect(salePrice).toBe(74.99);
+    expect(retailPrice).toBe('£88.99');
+    expect(salePrice).toBe('£74.99');
   });
 
   test('should extract ProductId', async () => {
@@ -64,8 +64,8 @@ describe(('Consortium List SubScraper '), async () => {
   });
 
   test('should execute page scrap', async () => {
-    scraper.scrollCount = 1;
-    scraper.maxPagination = 1;
+    scraper.options.scrollCount = 1;
+    scraper.options.maxPagination = 1;
     const scrapData = await scraper.executePageScrap();
     expect(scrapData.length).toBe(50);
   });

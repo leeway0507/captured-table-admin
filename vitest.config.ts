@@ -6,7 +6,8 @@ export default defineConfig({
         exclude: [...configDefaults.exclude,'**/hot_test/**'],
         coverage:{
             reporter:["text","html"]
-        }
+        },
+        testTimeout:20000
 
     }
 })

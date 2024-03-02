@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import sampleData from '../../utils/mock_data/product.json';
+import sampleData from '../utils/mock_data/product.json';
 import SubScraper, { ProductProps, defaultOptions } from './sub_scraper';
 
 describe(('subscrper test'), async () => {
@@ -45,12 +45,12 @@ describe(('subscrper test'), async () => {
   });
 
   test('should throw an error "scrap"', async () => {
-    scraper.scrollCount = 0;
+    scraper.options.scrollCount = 0;
     await expect(scraper.scrap()).rejects.toThrow();
   });
 
   test('should throw an error "executePageScrap"', async () => {
-    scraper.scrollCount = 0;
+    scraper.options.scrollCount = 0;
     await expect(scraper.executePageScrap()).rejects.toThrow();
   });
 
@@ -62,7 +62,7 @@ describe(('subscrper test'), async () => {
   });
 
   test('should be scrolled srollCount time', async () => {
-    scraper.scrollCount = 2;
+    scraper.options.scrollCount = 2;
     await scraper.scrollYPage();
 
     const scrollY = await scraper.page.evaluate(() => window.scrollY);
