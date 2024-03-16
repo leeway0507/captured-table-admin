@@ -3,12 +3,12 @@ import { ProductProps, StoreBrandDataProps } from '../../scraper/sub_scraper';
 import ListSubScraper from '../../scraper/list/list_sub_scraper';
 import brandData from './brand_list.json';
 
-export class ConsortiumListScraper extends ListSubScraper {
+export class HarresoeListScraper extends ListSubScraper {
   constructor() {
     super({
       scrollCount: 1,
-      maxPagination: 30,
-      storeName: 'consortium',
+      maxPagination: 1,
+      storeName: 'harresoe',
       scrapType: 'list',
     });
   }
@@ -27,26 +27,30 @@ export class ConsortiumListScraper extends ListSubScraper {
   }
 
   async extractRawCards(): Promise<Locator[]> {
-    const selector = '//li[@class="item text-center"]';
+    const selector = '//*[@id="collection-product-repeat"]';
     const loc = this.page.locator(selector);
     return loc.all();
   }
 
   async extractDataFromHtml(l: Locator): Promise<ProductProps> {
+    const productName = await l.locator('//span[@id="product-title"]').textContent();
     const productImgUrl = await l.getByRole('img').getAttribute('src');
-    const productName = await l.getByRole('img').getAttribute('alt');
-    const productUrl = await l.locator('//h2/a').getAttribute('href');
+
+    const productUrl = await l.locator('//a').getAttribute('href');
     const { retailPrice, salePrice } = await this.extractPriceData(l);
+    const brandNameRaw = await l.locator('//span[@class="vendor-type"]').textContent();
+    const brandName = brandNameRaw?.split(',')[0].toLowerCase();
+
     const color = await l.locator('//h4[@class="product-colour"]').textContent();
     const productId = await this.extractProductId(l);
     const isSale = retailPrice !== salePrice;
 
     return {
-      brand: this.job!.brandName,
-      productName: productName!.toLowerCase().trim(),
+      brand: brandName!,
+      productName: `${brandName} ${productName!.toLowerCase().trim()}`,
       productImgUrl: productImgUrl!,
       productUrl: productUrl!,
-      currencyCode: 'GBP',
+      currencyCode: 'EUR',
       retailPrice,
       salePrice,
       isSale,
@@ -56,18 +60,15 @@ export class ConsortiumListScraper extends ListSubScraper {
   }
 
   async extractPriceData(l: Locator) {
-    let retailPrice = '';
-    let salePrice = '';
-    const regularPrice = l.locator('//span[@class="regular-price"]');
-    if (await regularPrice.isVisible()) {
-      retailPrice = (await regularPrice.textContent()) ?? '0';
-      salePrice = (await regularPrice.textContent()) ?? '0';
-    } else {
-      retailPrice = (await l.locator('//span[@class="old-price"]').textContent()) ?? '0';
-      salePrice = (await l.locator('//span[@class="special-price"]').textContent()) ?? '0';
-    }
-    retailPrice = retailPrice.replace(/\s/g, '');
-    salePrice = salePrice.replace(/\s/g, '');
+    const retailPriceRaw = await l.locator('//span[@id="compare-price"]').getAttribute('data-currency-eur');
+    const salePriceRaw = await l.locator('//span[@id="price-item"]').getAttribute('data-currency-eur');
+
+    const retailPriceNum = retailPriceRaw!.replace(/\s/g, '').replace('EUR', '');
+    const salePriceNum = salePriceRaw!.replace(/\s/g, '').replace('EUR', '');
+
+    const retailPrice = `€ ${retailPriceNum}`;
+    const salePrice = `€ ${salePriceNum}`;
+
     return { retailPrice, salePrice };
   }
 
@@ -95,7 +96,7 @@ export class ConsortiumListScraper extends ListSubScraper {
     };
 
     let productId = '-';
-    const baseUrl = 'https://www.consortium.co.uk/';
+    const baseUrl = 'https://harresoe.com/';
     const productIdRaw = productUrl?.replace(baseUrl, '').replace('-', ' ').replace('.html', '');
 
     if (prodIdBefore && productIdRaw!.includes(prodIdBefore)) {
@@ -107,9 +108,7 @@ export class ConsortiumListScraper extends ListSubScraper {
   }
 
   async hasNextPage(): Promise<Locator | null> {
-    const selector = '//a[contains(@class,"next i-next")]';
-    const loc = this.page.locator(selector);
-    return (await loc.isVisible()) ? loc : null;
+    return null;
   }
 
   /* v8 ignore start */
@@ -129,10 +128,10 @@ export class ConsortiumListScraper extends ListSubScraper {
   /* v8 ignore stop */
 }
 
-async function NewConsortiumListScraper(headless: boolean = false) {
-  const instance = new ConsortiumListScraper();
+async function NewHarresoeListScraper(headless: boolean = false) {
+  const instance = new HarresoeListScraper();
   await instance.initBrowser(headless);
   return instance;
 }
 
-export default NewConsortiumListScraper;
+export default NewHarresoeListScraper;
