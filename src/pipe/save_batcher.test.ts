@@ -13,7 +13,7 @@ describe('Test Scrap -> Save data to backend Pipe folder', () => {
     batcher.createDir(targetPath);
     expect(fs.existsSync(targetPath)).toBe(true);
   });
-
+  fs.read
   test('should follow file name format, "240101T123456', () => {
     const fileName = batcher.fileName();
     expect(fileName.includes('T')).toBe(true);

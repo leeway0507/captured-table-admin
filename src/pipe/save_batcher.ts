@@ -2,12 +2,12 @@ import path from 'path';
 import fs from 'fs';
 
 class SaveBatcher {
-  save(data:string, targetPath:string, fileName:string) {
+  save(data: string, targetPath: string, fileName: string) {
     this.createDir(targetPath);
     fs.writeFileSync(path.join(targetPath, `${fileName}.json`), data);
   }
 
-  createDir(targetPath:string) {
+  createDir(targetPath: string) {
     if (!fs.existsSync(targetPath)) {
       fs.mkdirSync(targetPath, { recursive: true });
     }
@@ -23,7 +23,7 @@ class SaveBatcher {
 
     return `${year}${month}${day}T${hours}${minutes}${seconds}`;
   }
-  padZero(num:number) {
+  padZero(num: number) {
     return num.toString().padStart(2, '0'); // Ensure two digits, padding with zero if necessary
   }
 }

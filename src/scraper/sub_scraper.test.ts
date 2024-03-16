@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest';
+import fs from 'fs';
 import sampleData from '../utils/mock_data/product.json';
 import SubScraper, { ProductProps, defaultOptions } from './sub_scraper';
 
@@ -73,5 +74,14 @@ describe(('subscrper test'), async () => {
   test('should drop duplicate array', () => {
     const scrapData: ProductProps[] = sampleData;
     expect(scraper.dropDuplicate(scrapData).length).toBe(1);
+  });
+
+  test('should download Imagefile', async () => {
+    const scrapData: ProductProps[] = sampleData;
+    const filePath = '/Users/yangwoolee/repo/captured-filter/admin/src/scraper/list/test/img/test.jpg';
+    await scraper.downloadImage(scrapData[0].productImgUrl, filePath);
+    await scraper.browserWait();
+    expect(fs.existsSync(filePath)).toBe(true);
+    fs.unlinkSync(filePath);
   });
 });

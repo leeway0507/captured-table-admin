@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest';
-import ListConsortiumScraper from '../store/consortium/list';
+import { ConsortiumListScraper } from '../store/consortium/list';
 import MainBatcher from './main_batcher';
 
 const mockHtmlPath = '/Users/yangwoolee/repo/captured-filter/admin/src/store/consortium/list.html';
 const localUrl = `file://${mockHtmlPath}`;
 
-class TestListScraper extends ListConsortiumScraper {
+class TestListScraper extends ConsortiumListScraper {
   getBrandData() {
     return [{
       store_name: 'testStore',
