@@ -27,7 +27,7 @@ export class HarresoeListScraper extends ListSubScraper {
   }
 
   async extractRawCards(): Promise<Locator[]> {
-    const selector = '//*[@id="collection-product-repeat"]';
+    const selector = '//div[contains(@class,"col-sm-4 col-xs-12")]';
     const loc = this.page.locator(selector);
     return loc.all();
   }
@@ -41,9 +41,8 @@ export class HarresoeListScraper extends ListSubScraper {
     const brandNameRaw = await l.locator('//span[@class="vendor-type"]').textContent();
     const brandName = brandNameRaw?.split(',')[0].toLowerCase();
 
-    const color = await l.locator('//h4[@class="product-colour"]').textContent();
-    const productId = await this.extractProductId(l);
     const isSale = retailPrice !== salePrice;
+    const productId = productName?.split(' ').slice(-3).toString();
 
     return {
       brand: brandName!,
@@ -54,8 +53,7 @@ export class HarresoeListScraper extends ListSubScraper {
       retailPrice,
       salePrice,
       isSale,
-      productId,
-      color: color!.replace(/^\(|\)$/g, ''),
+      productId: productId!,
     };
   }
 
@@ -63,48 +61,13 @@ export class HarresoeListScraper extends ListSubScraper {
     const retailPriceRaw = await l.locator('//span[@id="compare-price"]').getAttribute('data-currency-eur');
     const salePriceRaw = await l.locator('//span[@id="price-item"]').getAttribute('data-currency-eur');
 
-    const retailPriceNum = retailPriceRaw!.replace(/\s/g, '').replace('EUR', '');
-    const salePriceNum = salePriceRaw!.replace(/\s/g, '').replace('EUR', '');
+    const retailPriceNum = retailPriceRaw!.replace('EUR', '');
+    const salePriceNum = salePriceRaw!.replace('EUR', '');
 
     const retailPrice = `€ ${retailPriceNum}`;
     const salePrice = `€ ${salePriceNum}`;
 
     return { retailPrice, salePrice };
-  }
-
-  async extractProductId(l: Locator) {
-    const color = await l.locator('//h4[@class="product-colour"]').textContent();
-    const productUrl = await l.locator('//h2/a').getAttribute('href');
-
-    let prodIdBefore: string | null = null;
-    if (color) {
-      prodIdBefore = color
-        .replace(/^\(|\)$/g, '')
-        .toLowerCase()
-        .split('/')
-        .pop()
-        ?.split(' ')
-        .pop()
-        ?.split('-')
-        .pop()
-        ?.toLowerCase() || null;
-    }
-
-    const rindex = (lst: string[], value: string) => {
-      const idx = lst.slice().reverse().indexOf(value);
-      return idx >= 0 ? lst.length - idx - 1 : -1;
-    };
-
-    let productId = '-';
-    const baseUrl = 'https://harresoe.com/';
-    const productIdRaw = productUrl?.replace(baseUrl, '').replace('-', ' ').replace('.html', '');
-
-    if (prodIdBefore && productIdRaw!.includes(prodIdBefore)) {
-      const splitName = productIdRaw!.split('-');
-      const idx = rindex(splitName, prodIdBefore) + 1;
-      productId = splitName.slice(idx).join('-');
-    }
-    return productId;
   }
 
   async hasNextPage(): Promise<Locator | null> {

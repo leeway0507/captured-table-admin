@@ -1,14 +1,15 @@
 import { Locator } from 'playwright';
+import path from 'path';
 import { ProductProps, StoreBrandDataProps } from '../../scraper/sub_scraper';
 import ListSubScraper from '../../scraper/list/list_sub_scraper';
 import brandData from './brand_list.json';
 
-export class ConsortiumListScraper extends ListSubScraper {
+export class EndclothingListScraper extends ListSubScraper {
   constructor() {
     super({
-      scrollCount: 1,
+      scrollCount: 15,
       maxPagination: 30,
-      storeName: 'consortium',
+      storeName: 'endclothing',
       scrapType: 'list',
     });
   }
@@ -27,44 +28,44 @@ export class ConsortiumListScraper extends ListSubScraper {
   }
 
   async extractRawCards(): Promise<Locator[]> {
-    const selector = '//li[@class="item text-center"]';
+    const selector = '//*[@data-test-id="ProductCard__ProductCardSC"]';
     const loc = this.page.locator(selector);
     return loc.all();
   }
 
   async extractDataFromHtml(l: Locator): Promise<ProductProps> {
-    const productImgUrl = await l.getByRole('img').getAttribute('src');
-    const productName = await l.getByRole('img').getAttribute('alt');
-    const productUrl = await l.locator('//h2/a').getAttribute('href');
+    const productImgUrl = await l.getByRole('img').first().getAttribute('src');
+    const productName = await l.getByRole('img').first().getAttribute('alt');
+    const productUrl = await l.getAttribute('href');
     const { retailPrice, salePrice } = await this.extractPriceData(l);
-    const color = await l.locator('//h4[@class="product-colour"]').textContent();
     const productId = await this.extractProductId(l);
     const isSale = retailPrice !== salePrice;
 
-    return {
+    const color = await l.locator('//span[@data-test-id="ProductCard__ProductColor"]').textContent(); return {
       brand: this.job!.brandName,
       productName: productName!.toLowerCase().trim(),
       productImgUrl: productImgUrl!,
-      productUrl: productUrl!,
-      currencyCode: 'GBP',
+      productUrl: path.join('https://www.endclothing.com', productUrl!),
+      currencyCode: 'KRW',
       retailPrice,
       salePrice,
       isSale,
-      productId,
-      color: color!.replace(/^\(|\)$/g, ''),
+      productId: productId!,
+      color: color!.replace('&', '/'),
     };
   }
 
   async extractPriceData(l: Locator) {
     let retailPrice = '';
     let salePrice = '';
-    const retailPriceRaw = l.locator('//span[@class="regular-price"]');
-    if (await retailPriceRaw.isVisible()) {
+    const retailPriceRaw = l.locator('//*/span[@data-test-id=ProductCard__ProductFullPrice]');
+    const salePriceRaw = l.locator('//*/span[@data-test-id="ProductCard__ProductFinalPrice"]');
+    if (await retailPriceRaw.isVisible({ timeout: 500 })) {
       retailPrice = (await retailPriceRaw.textContent()) ?? '0';
-      salePrice = (await retailPriceRaw.textContent()) ?? '0';
+      salePrice = (await salePriceRaw.textContent()) ?? '0';
     } else {
-      retailPrice = (await l.locator('//span[@class="old-price"]').textContent()) ?? '0';
-      salePrice = (await l.locator('//span[@class="special-price"]').textContent()) ?? '0';
+      retailPrice = (await salePriceRaw.textContent()) ?? '0';
+      salePrice = (await salePriceRaw.textContent()) ?? '0';
     }
     retailPrice = retailPrice.replace(/\s/g, '');
     salePrice = salePrice.replace(/\s/g, '');
@@ -72,42 +73,12 @@ export class ConsortiumListScraper extends ListSubScraper {
   }
 
   async extractProductId(l: Locator) {
-    const color = await l.locator('//h4[@class="product-colour"]').textContent();
-    const productUrl = await l.locator('//h2/a').getAttribute('href');
-
-    let prodIdBefore: string | null = null;
-    if (color) {
-      prodIdBefore = color
-        .replace(/^\(|\)$/g, '')
-        .toLowerCase()
-        .split('/')
-        .pop()
-        ?.split(' ')
-        .pop()
-        ?.split('-')
-        .pop()
-        ?.toLowerCase() || null;
-    }
-
-    const rindex = (lst: string[], value: string) => {
-      const idx = lst.slice().reverse().indexOf(value);
-      return idx >= 0 ? lst.length - idx - 1 : -1;
-    };
-
-    let productId = '-';
-    const baseUrl = 'https://www.consortium.co.uk/';
-    const productIdRaw = productUrl?.replace(baseUrl, '').replace('-', ' ').replace('.html', '');
-
-    if (prodIdBefore && productIdRaw!.includes(prodIdBefore)) {
-      const splitName = productIdRaw!.split('-');
-      const idx = rindex(splitName, prodIdBefore) + 1;
-      productId = splitName.slice(idx).join('-');
-    }
+    const productId = await l.getAttribute('id');
     return productId;
   }
 
   async hasNextPage(): Promise<Locator | null> {
-    const selector = '//a[contains(@class,"next i-next")]';
+    const selector = '//div[contains(@class,"LoadMoreButton__LoadMoreButtonWrapperSC")]';
     const loc = this.page.locator(selector);
     return (await loc.isVisible()) ? loc : null;
   }
@@ -129,10 +100,10 @@ export class ConsortiumListScraper extends ListSubScraper {
   /* v8 ignore stop */
 }
 
-async function NewConsortiumListScraper(headless: boolean = false) {
-  const instance = new ConsortiumListScraper();
+async function NewEndclothingListScraper(headless: boolean = false) {
+  const instance = new EndclothingListScraper();
   await instance.initBrowser(headless);
   return instance;
 }
 
-export default NewConsortiumListScraper;
+export default NewEndclothingListScraper;

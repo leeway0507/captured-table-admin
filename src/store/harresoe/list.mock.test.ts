@@ -8,7 +8,7 @@ const localUrl = `file://${mockHtmlPath}`;
 
 describe(('Consortium List SubScraper '), async () => {
   const scraper = new HarresoeListScraper();
-  const headless = false;
+  const headless = true;
   await scraper.initBrowser(headless);
   await scraper.page.goto(localUrl);
   //   await scraper.loadingWait();
@@ -28,20 +28,22 @@ describe(('Consortium List SubScraper '), async () => {
 
   test('should have next page', async () => {
     const nextPage = await scraper.hasNextPage();
-    expect(nextPage).not.toBe(null);
+    expect(nextPage).toBe(null);
   });
 
-  //   test('should extract Raw Cards', async () => {
-  //     const locators = await scraper.extractRawCards();
-  //     expect(locators.length).toBe(50);
-  //   });
+  test('should extract Raw Cards', async () => {
+    const locators = await scraper.extractRawCards();
+    expect(locators.length).toBe(137);
+  });
 
-  //   test('should extract Price Data', async () => {
-  //     const locators = await scraper.extractRawCards();
-  //     const { retailPrice, salePrice } = await scraper.extractPriceData(locators[2]);
-  //     expect(retailPrice).toBe('£88.99');
-  //     expect(salePrice).toBe('£74.99');
-  //   });
+  test('should extract Price Data', async () => {
+    // 중단 24.3.16.
+    const locators = await scraper.extractRawCards();
+    console.log(locators[2]);
+    const { retailPrice, salePrice } = await scraper.extractPriceData(locators[2]);
+    expect(retailPrice).toBe('£88.99');
+    expect(salePrice).toBe('£74.99');
+  });
 
   //   test('should extract ProductId', async () => {
   //     const locators = await scraper.extractRawCards();
