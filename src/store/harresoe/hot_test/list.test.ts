@@ -1,18 +1,18 @@
 import { describe, expect, test } from 'vitest';
-import { ConsortiumListScraper } from '../list';
+import { HarresoeListScraper } from '../list';
 
-const url = 'https://www.consortium.co.uk/brands/adidas.html';
+const url = 'https://www.harresoe.com/collections/adidas-originals';
 
-describe(('Consortium List SubScraper '), async () => {
-  const scraper = new ConsortiumListScraper();
+describe(('Harresoe CookieTest'), async () => {
+  const scraper = new HarresoeListScraper();
   const headless = false;
   await scraper.initBrowser(headless);
   await scraper.page.goto(url);
   await scraper.loadingWait();
 
   test('should handle cooikes', async () => {
-    await scraper.handleNewsLetterModal();
-    const selector = '//*[@id="newsletter-modal"]/a';
+    await scraper.handleCookies();
+    const selector = '//*[@id="coi-banner-wrapper"]//button[@aria-label="Accept all"]';
     expect(await scraper.page.isVisible(selector)).toBe(false);
   });
 });

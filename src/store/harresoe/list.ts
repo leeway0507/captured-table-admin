@@ -27,7 +27,7 @@ export class HarresoeListScraper extends ListSubScraper {
   }
 
   async extractRawCards(): Promise<Locator[]> {
-    const selector = '//div[contains(@class,"col-sm-4 col-xs-12")]';
+    const selector = '//*[@id="product-grid"]/li';
     const loc = this.page.locator(selector);
     return loc.all();
   }
@@ -36,52 +36,60 @@ export class HarresoeListScraper extends ListSubScraper {
     const productName = await l.locator('//span[@id="product-title"]').textContent();
     const productImgUrl = await l.getByRole('img').getAttribute('src');
 
-    const productUrl = await l.locator('//a').getAttribute('href');
+    const productUrlPath = await l.locator('//a').getAttribute('href');
+    const productUrl = new URL(productUrlPath!, 'https://www.urbanindustry.co.uk/');
+
     const { retailPrice, salePrice } = await this.extractPriceData(l);
     const brandNameRaw = await l.locator('//span[@class="vendor-type"]').textContent();
     const brandName = brandNameRaw?.split(',')[0].toLowerCase();
 
     const isSale = retailPrice !== salePrice;
-    const productId = productName?.split(' ').slice(-3).toString();
+    // product id를 추출할 패턴이 없음
+    const productId = '-';
 
     return {
       brand: brandName!,
       productName: `${brandName} ${productName!.toLowerCase().trim()}`,
-      productImgUrl: productImgUrl!,
-      productUrl: productUrl!,
+      productImgUrl: `https:${productImgUrl!}`,
+      productUrl: productUrl.href,
       currencyCode: 'EUR',
       retailPrice,
       salePrice,
       isSale,
-      productId: productId!,
+      productId,
     };
   }
 
   async extractPriceData(l: Locator) {
-    const retailPriceRaw = await l.locator('//span[@id="compare-price"]').getAttribute('data-currency-eur');
-    const salePriceRaw = await l.locator('//span[@id="price-item"]').getAttribute('data-currency-eur');
+    let retailPrice = '';
+    let salePrice = '';
+    const retailPriceRaw = await l.locator('//span[@id="compare-price"]/span');
+    const salePriceRaw = await l.locator('//span[@id="price-item"]/span');
+    if (await retailPriceRaw.isVisible()) {
+      retailPrice = (await retailPriceRaw.getAttribute('data-currency-eur')) ?? '0';
+      salePrice = (await salePriceRaw.getAttribute('data-currency-eur')) ?? '0';
+    } else {
+      retailPrice = (await salePriceRaw.getAttribute('data-currency-eur')) ?? '0';
+      salePrice = (await salePriceRaw.getAttribute('data-currency-eur')) ?? '0';
+    }
+    const retailPriceNum = retailPrice!.replace('EUR', '').replace(' ', '');
+    const salePriceNum = salePrice!.replace('EUR', '').replace(' ', '');
 
-    const retailPriceNum = retailPriceRaw!.replace('EUR', '');
-    const salePriceNum = salePriceRaw!.replace('EUR', '');
-
-    const retailPrice = `€ ${retailPriceNum}`;
-    const salePrice = `€ ${salePriceNum}`;
-
+    retailPrice = `€${retailPriceNum}`;
+    salePrice = `€${salePriceNum}`;
     return { retailPrice, salePrice };
   }
 
   async hasNextPage(): Promise<Locator | null> {
-    return null;
+    const selector = '// a[@aria-label="Next page"]';
+    const loc = this.page.locator(selector);
+    return (await loc.isVisible()) ? loc : null;
   }
 
   /* v8 ignore start */
   // hot test에서 수동으로 수행하므로 coverage에서 제외
   async handleCookies(): Promise<void> {
-    await this.handleNewsLetterModal();
-  }
-
-  async handleNewsLetterModal() {
-    const selector = '//*[@id="newsletter-modal"]/a';
+    const selector = '//*[@id="coi-banner-wrapper"]//button[@aria-label="Accept all"]';
     const loc = this.page.locator(selector);
     if (await loc.isVisible()) {
       await loc.click();

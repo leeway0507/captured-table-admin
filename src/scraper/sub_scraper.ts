@@ -118,8 +118,8 @@ class SubScraper<T extends object> {
     throw new Error('Method "handleCookies" must be implemented');
   }
 
-  async isItemExist(): Promise<boolean> {
-    throw new Error('Method "isItemExist" must be implemented');
+  async afterNextClick() {
+    throw new Error('Method "afterNextClick" must be implemented');
   }
 
   /* v8 ignore start */
@@ -143,6 +143,7 @@ class SubScraper<T extends object> {
 
     if (nextPage && pagepageNationCount < this.options.maxPagination) {
       await nextPage.click();
+      this.afterNextClick();
       const nextPageResult = await this.executePageScrap(scrapData);
       return nextPageResult;
     }
@@ -153,10 +154,10 @@ class SubScraper<T extends object> {
   async scrollYPage(count: number = 0) {
     if (this.options.scrollCount === 0) return;
 
-    const randomNumber = this.getRandomInt(200, 1000);
+    const randomNumber = this.getRandomInt(400, 1000);
     await this.page.evaluate((num: number) => {
       /* v8 ignore next */
-      window.scrollBy(200, num);
+      window.scrollBy(0, num);
     }, randomNumber);
 
     await this.browserWait();
@@ -187,7 +188,7 @@ class SubScraper<T extends object> {
   }
 
   async browserWait() {
-    await this.page.waitForTimeout(this.getRandomInt(500, 2000));
+    await this.page.waitForTimeout(this.getRandomInt(200, 1000));
   }
 
   async loadingWait() {

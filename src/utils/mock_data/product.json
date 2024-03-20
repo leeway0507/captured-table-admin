@@ -1,34 +1,36 @@
 [
-    {
-        "brand": "a.p.c. homeware",
-        "productName": "candle-no-2-green-jasmine-ybzaa-m84001-vab",
-        "productImgUrl": "https://www.consortium.co.uk/media/catalog/product/cache/1/small_image/600x600/9df78eab33525d08d6e5fb8d27136e95/a/-/a-p-c-candle-no-2-green-jasmine-ybzaa-m84001-vab-cat.jpg",
-        "productUrl": "https://www.consortium.co.uk/a-p-c-candle-no-2-green-jasmine-ybzaa-m84001-vab.html",
-        "currencyCode": "GBP",
-        "retailPrice": "£39.99",
-        "salePrice": "£39.99",
-        "korBrand": "에이피씨 홈웨어",
-        "korProductName": "캔들 2 그린 자스민 ybzaa m84001 vab",
-        "productId": "YBZAA-M84001-VAB",
-        "gender": "b",
-        "color": "-",
-        "category": "acc",
-        "categorySpec": "etc"
-    },
-    {
-        "brand": "a.p.c. homeware",
-        "productName": "candle-no-2-green-jasmine-ybzaa-m84001-vab",
-        "productImgUrl": "https://www.consortium.co.uk/media/catalog/product/cache/1/small_image/600x600/9df78eab33525d08d6e5fb8d27136e95/a/-/a-p-c-candle-no-2-green-jasmine-ybzaa-m84001-vab-cat.jpg",
-        "productUrl": "https://www.consortium.co.uk/a-p-c-candle-no-2-green-jasmine-ybzaa-m84001-vab.html",
-        "currencyCode": "GBP",
-        "retailPrice": "£39.99",
-        "salePrice": "£39.99",
-        "korBrand": "에이피씨 홈웨어",
-        "korProductName": "캔들 2 그린 자스민 ybzaa m84001 vab",
-        "productId": "YBZAA-M84001-VAB",
-        "gender": "b",
-        "color": "-",
-        "category": "acc",
-        "categorySpec": "etc"
-    }
+  {
+    "brand": "a.p.c. homeware",
+    "productName": "candle-no-2-green-jasmine-ybzaa-m84001-vab",
+    "productImgUrl": "https://www.consortium.co.uk/media/catalog/product/cache/1/small_image/600x600/9df78eab33525d08d6e5fb8d27136e95/a/-/a-p-c-candle-no-2-green-jasmine-ybzaa-m84001-vab-cat.jpg",
+    "productUrl": "https://www.consortium.co.uk/a-p-c-candle-no-2-green-jasmine-ybzaa-m84001-vab.html",
+    "currencyCode": "GBP",
+    "retailPrice": "£39.99",
+    "salePrice": "£39.99",
+    "korBrand": "에이피씨 홈웨어",
+    "korProductName": "캔들 2 그린 자스민 ybzaa m84001 vab",
+    "productId": "YBZAA-M84001-VAB",
+    "gender": "b",
+    "color": "-",
+    "category": "acc",
+    "categorySpec": "etc",
+    "isSale": false
+  },
+  {
+    "brand": "a.p.c. homeware",
+    "productName": "candle-no-2-green-jasmine-ybzaa-m84001-vab",
+    "productImgUrl": "https://www.consortium.co.uk/media/catalog/product/cache/1/small_image/600x600/9df78eab33525d08d6e5fb8d27136e95/a/-/a-p-c-candle-no-2-green-jasmine-ybzaa-m84001-vab-cat.jpg",
+    "productUrl": "https://www.consortium.co.uk/a-p-c-candle-no-2-green-jasmine-ybzaa-m84001-vab.html",
+    "currencyCode": "GBP",
+    "retailPrice": "£39.99",
+    "salePrice": "£39.99",
+    "korBrand": "에이피씨 홈웨어",
+    "korProductName": "캔들 2 그린 자스민 ybzaa m84001 vab",
+    "productId": "YBZAA-M84001-VAB",
+    "gender": "b",
+    "color": "-",
+    "category": "acc",
+    "categorySpec": "etc",
+    "isSale": false
+  }
 ]

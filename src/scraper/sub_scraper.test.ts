@@ -36,7 +36,7 @@ describe(('subscrper test'), async () => {
     expect(() => scraper.getBrandData()).toThrow();
     expect(() => scraper.getUrl()).toThrow();
     await expect(scraper.handleCookies()).rejects.toThrow();
-    await expect(scraper.isItemExist()).rejects.toThrow();
+    await expect(scraper.afterNextClick()).rejects.toThrow();
     await expect(scraper.extractCards()).rejects.toThrow();
     await expect(scraper.hasNextPage()).rejects.toThrow();
   });

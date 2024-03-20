@@ -20,52 +20,43 @@ describe(('Consortium List SubScraper '), async () => {
   });
 
   test('should get url', () => {
-    scraper.job = { brandName: 'one brand sale' };
-    const wantUrl = 'https://harresoe.com/collections/sale';
+    scraper.job = { brandName: 'adidas' };
+    const wantUrl = 'https://www.urbanindustry.co.uk/collections/adidas-originals';
     const gotUrl = scraper.getUrl();
     expect(gotUrl).toEqual(wantUrl);
   });
 
   test('should have next page', async () => {
     const nextPage = await scraper.hasNextPage();
-    expect(nextPage).toBe(null);
+    expect(nextPage).toEqual(true);
   });
 
   test('should extract Raw Cards', async () => {
     const locators = await scraper.extractRawCards();
-    expect(locators.length).toBe(137);
+    expect(locators.length).toBe(12);
   });
 
-  test('should extract Price Data', async () => {
-    // 중단 24.3.16.
-    const locators = await scraper.extractRawCards();
-    console.log(locators[2]);
-    const { retailPrice, salePrice } = await scraper.extractPriceData(locators[2]);
-    expect(retailPrice).toBe('£88.99');
-    expect(salePrice).toBe('£74.99');
-  });
+  // test('should extract Price Data', async () => {
+  //   const locators = await scraper.extractRawCards();
+  //   const { retailPrice, salePrice } = await scraper.extractPriceData(locators[2]);
+  //   expect(retailPrice).toBe('€121');
+  //   expect(salePrice).toBe('€121');
+  // });
 
-  //   test('should extract ProductId', async () => {
-  //     const locators = await scraper.extractRawCards();
-  //     const productId = await scraper.extractProductId(locators[2]);
-  //     expect(productId).toBe('b75806');
-  //   });
+  // test('should extractDataFromHtml', async () => {
+  //   const locators = await scraper.extractRawCards();
+  //   const arr = await scraper.extractDataFromHtml(locators[0]);
 
-  //   test('should extractDataFromHtml', async () => {
-  //     const locators = await scraper.extractRawCards();
-  //     const arr = await scraper.extractDataFromHtml(locators[0]);
+  //   expect(arr).toHaveProperty('productName');
+  //   expect(arr).toHaveProperty('retailPrice');
+  // });
 
-  //     expect(arr).toHaveProperty('productName');
-  //     expect(arr).toHaveProperty('retailPrice');
-  //     expect(arr).toHaveProperty('color');
-  //   });
-
-  //   test('should extract Cards', async () => {
-  //     const dataList = await scraper.extractCards();
-  //     expect(dataList.length).toBe(50);
-  //   });
-  //   test('should check isSale', async () => {
-  //     const dataList = await scraper.extractCards();
-  //     expect(dataList[0].isSale).toBeTypeOf('boolean');
-  //   });
+  // test('should extract Cards', async () => {
+  //   const dataList = await scraper.extractCards();
+  //   expect(dataList.length).toBe(12);
+  // });
+  // test('should check isSale', async () => {
+  //   const dataList = await scraper.extractCards();
+  //   expect(dataList[0].isSale).toBeTypeOf('boolean');
+  // });
 });
