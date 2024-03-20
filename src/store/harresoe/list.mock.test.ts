@@ -20,15 +20,15 @@ describe(('Consortium List SubScraper '), async () => {
   });
 
   test('should get url', () => {
-    scraper.job = { brandName: 'adidas' };
-    const wantUrl = 'https://www.urbanindustry.co.uk/collections/adidas-originals';
+    scraper.job = { brandName: 'one brand sale' };
+    const wantUrl = 'https://harresoe.com/collections/sale';
     const gotUrl = scraper.getUrl();
     expect(gotUrl).toEqual(wantUrl);
   });
 
   test('should have next page', async () => {
     const nextPage = await scraper.hasNextPage();
-    expect(nextPage).toEqual(true);
+    expect(nextPage).toBe(null);
   });
 
   test('should extract Raw Cards', async () => {
@@ -36,27 +36,27 @@ describe(('Consortium List SubScraper '), async () => {
     expect(locators.length).toBe(12);
   });
 
-  // test('should extract Price Data', async () => {
-  //   const locators = await scraper.extractRawCards();
-  //   const { retailPrice, salePrice } = await scraper.extractPriceData(locators[2]);
-  //   expect(retailPrice).toBe('€121');
-  //   expect(salePrice).toBe('€121');
-  // });
+  test('should extract Price Data', async () => {
+    const locators = await scraper.extractRawCards();
+    const { retailPrice, salePrice } = await scraper.extractPriceData(locators[2]);
+    expect(retailPrice).toBe('€121');
+    expect(salePrice).toBe('€121');
+  });
 
-  // test('should extractDataFromHtml', async () => {
-  //   const locators = await scraper.extractRawCards();
-  //   const arr = await scraper.extractDataFromHtml(locators[0]);
+  test('should extractDataFromHtml', async () => {
+    const locators = await scraper.extractRawCards();
+    const arr = await scraper.extractDataFromHtml(locators[0]);
 
-  //   expect(arr).toHaveProperty('productName');
-  //   expect(arr).toHaveProperty('retailPrice');
-  // });
+    expect(arr).toHaveProperty('productName');
+    expect(arr).toHaveProperty('retailPrice');
+  });
 
-  // test('should extract Cards', async () => {
-  //   const dataList = await scraper.extractCards();
-  //   expect(dataList.length).toBe(12);
-  // });
-  // test('should check isSale', async () => {
-  //   const dataList = await scraper.extractCards();
-  //   expect(dataList[0].isSale).toBeTypeOf('boolean');
-  // });
+  test('should extract Cards', async () => {
+    const dataList = await scraper.extractCards();
+    expect(dataList.length).toBe(12);
+  });
+  test('should check isSale', async () => {
+    const dataList = await scraper.extractCards();
+    expect(dataList[0].isSale).toBeTypeOf('boolean');
+  });
 });

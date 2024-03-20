@@ -27,7 +27,7 @@ export class HarresoeListScraper extends ListSubScraper {
   }
 
   async extractRawCards(): Promise<Locator[]> {
-    const selector = '//*[@id="product-grid"]/li';
+    const selector = '//div[contains(@class,"col-sm-4 col-xs-12")]';
     const loc = this.page.locator(selector);
     return loc.all();
   }
@@ -37,7 +37,7 @@ export class HarresoeListScraper extends ListSubScraper {
     const productImgUrl = await l.getByRole('img').getAttribute('src');
 
     const productUrlPath = await l.locator('//a').getAttribute('href');
-    const productUrl = new URL(productUrlPath!, 'https://www.urbanindustry.co.uk/');
+    const productUrl = new URL(productUrlPath!, 'https://harresoe.com/');
 
     const { retailPrice, salePrice } = await this.extractPriceData(l);
     const brandNameRaw = await l.locator('//span[@class="vendor-type"]').textContent();
@@ -81,9 +81,7 @@ export class HarresoeListScraper extends ListSubScraper {
   }
 
   async hasNextPage(): Promise<Locator | null> {
-    const selector = '// a[@aria-label="Next page"]';
-    const loc = this.page.locator(selector);
-    return (await loc.isVisible()) ? loc : null;
+    return null;
   }
 
   /* v8 ignore start */
