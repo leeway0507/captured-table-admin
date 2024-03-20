@@ -3,12 +3,12 @@ import { ProductProps, StoreBrandDataProps } from '../../scraper/sub_scraper';
 import ListSubScraper from '../../scraper/list/list_sub_scraper';
 import brandData from './brand_list.json';
 
-export class HarresoeListScraper extends ListSubScraper {
+export class UrbanIndustryListScraper extends ListSubScraper {
   constructor() {
     super({
       scrollCount: 1,
       maxPagination: 1,
-      storeName: 'harresoe',
+      storeName: 'urban_industry',
       scrapType: 'list',
     });
   }
@@ -27,61 +27,60 @@ export class HarresoeListScraper extends ListSubScraper {
   }
 
   async extractRawCards(): Promise<Locator[]> {
-    const selector = '//*[@id="product-grid"]/li';
+    const selector = '//*[@id="product-grid"]//li[@class="grid__item"]';
     const loc = this.page.locator(selector);
     return loc.all();
   }
 
   async extractDataFromHtml(l: Locator): Promise<ProductProps> {
-    const productName = await l.locator('//span[@id="product-title"]').textContent();
     const productImgUrl = await l.getByRole('img').getAttribute('src');
-
-    const productUrlPath = await l.locator('//a').getAttribute('href');
+    const productUrlPath = await l.locator('//h3[contains(@class,"h5")]/a').getAttribute('href');
     const productUrl = new URL(productUrlPath!, 'https://www.urbanindustry.co.uk/');
+    const productName = productUrlPath?.split('?')[0].replace('/products/', '').replaceAll('-', ' ');
+    const color = await l.locator('//h3[contains(@class,"h5")]/a/span').textContent();
 
     const { retailPrice, salePrice } = await this.extractPriceData(l);
-    const brandNameRaw = await l.locator('//span[@class="vendor-type"]').textContent();
-    const brandName = brandNameRaw?.split(',')[0].toLowerCase();
 
     const isSale = retailPrice !== salePrice;
     // product id를 추출할 패턴이 없음
     const productId = '-';
 
     return {
-      brand: brandName!,
-      productName: `${brandName} ${productName!.toLowerCase().trim()}`,
+      brand: this.job!.brandName,
+      productName: productName!,
       productImgUrl: `https:${productImgUrl!}`,
       productUrl: productUrl.href,
-      currencyCode: 'EUR',
+      currencyCode: 'KRW',
       retailPrice,
       salePrice,
       isSale,
       productId,
+      color: color?.replace('\n', ''),
     };
   }
 
   async extractPriceData(l: Locator) {
     let retailPrice = '';
     let salePrice = '';
-    const retailPriceRaw = await l.locator('//span[@id="compare-price"]/span');
-    const salePriceRaw = await l.locator('//span[@id="price-item"]/span');
-    if (await retailPriceRaw.isVisible()) {
-      retailPrice = (await retailPriceRaw.getAttribute('data-currency-eur')) ?? '0';
-      salePrice = (await salePriceRaw.getAttribute('data-currency-eur')) ?? '0';
-    } else {
-      retailPrice = (await salePriceRaw.getAttribute('data-currency-eur')) ?? '0';
-      salePrice = (await salePriceRaw.getAttribute('data-currency-eur')) ?? '0';
-    }
-    const retailPriceNum = retailPrice!.replace('EUR', '').replace(' ', '');
-    const salePriceNum = salePrice!.replace('EUR', '').replace(' ', '');
+    const retailPriceRaw = l.locator('//s[contains(@class,"price-item--regular")]');
+    const salePriceRaw = l.locator('//span[contains(@class,"price-item--last")]').first();
 
-    retailPrice = `€${retailPriceNum}`;
-    salePrice = `€${salePriceNum}`;
+    retailPrice = (await retailPriceRaw.textContent().then((r) => r?.trim())) ?? '0';
+    if (retailPrice !== '₩0 KRW') {
+      retailPrice = (await retailPriceRaw.textContent()) ?? '0';
+      salePrice = (await salePriceRaw.textContent()) ?? '0';
+    } else {
+      retailPrice = (await salePriceRaw.textContent()) ?? '0';
+      salePrice = (await salePriceRaw.textContent()) ?? '0';
+    }
+    retailPrice = retailPrice!.replace('KRW', '').trim();
+    salePrice = salePrice!.replace('KRW', '').split('(')[0].trim();
+
     return { retailPrice, salePrice };
   }
 
   async hasNextPage(): Promise<Locator | null> {
-    const selector = '// a[@aria-label="Next page"]';
+    const selector = '//a[@aria-label="Next page"]';
     const loc = this.page.locator(selector);
     return (await loc.isVisible()) ? loc : null;
   }
@@ -89,20 +88,16 @@ export class HarresoeListScraper extends ListSubScraper {
   /* v8 ignore start */
   // hot test에서 수동으로 수행하므로 coverage에서 제외
   async handleCookies(): Promise<void> {
-    const selector = '//*[@id="coi-banner-wrapper"]//button[@aria-label="Accept all"]';
-    const loc = this.page.locator(selector);
-    if (await loc.isVisible()) {
-      await loc.click();
-      await this.page.waitForSelector(selector, { state: 'hidden' });
-    }
+    const emptyFunction = () => {};
+    emptyFunction();
   }
   /* v8 ignore stop */
 }
 
-async function NewHarresoeListScraper(headless: boolean = false) {
-  const instance = new HarresoeListScraper();
+async function NewUrbanIndustryListScraper(headless: boolean = false) {
+  const instance = new UrbanIndustryListScraper();
   await instance.initBrowser(headless);
   return instance;
 }
 
-export default NewHarresoeListScraper;
+export default NewUrbanIndustryListScraper;

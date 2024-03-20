@@ -44,7 +44,9 @@ export class EndclothingListScraper extends ListSubScraper {
     const productId = await this.extractProductId(l);
     const isSale = retailPrice !== salePrice;
 
-    const color = await l.locator('//span[@data-test-id="ProductCard__ProductColor"]').textContent(); return {
+    const color = await l.locator('//span[@data-test-id="ProductCard__ProductColor"]').textContent();
+
+    return {
       brand: this.job!.brandName,
       productName: `${productName} ${productId}`,
       productImgUrl: productImgUrl!,

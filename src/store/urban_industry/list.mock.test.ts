@@ -1,13 +1,13 @@
 import { describe, expect, test } from 'vitest';
 import path from 'path';
 
-import { EndclothingListScraper } from './list';
+import { UrbanIndustryListScraper } from './list';
 
 const mockHtmlPath = path.resolve(__dirname, './list.html');
 const localUrl = `file://${mockHtmlPath}`;
 
 describe(('Consortium List SubScraper '), async () => {
-  const scraper = new EndclothingListScraper();
+  const scraper = new UrbanIndustryListScraper();
   const headless = true;
   await scraper.initBrowser(headless);
   await scraper.page.goto(localUrl);
@@ -20,8 +20,8 @@ describe(('Consortium List SubScraper '), async () => {
   });
 
   test('should get url', () => {
-    scraper.job = { brandName: 'a.p.c.' };
-    const wantUrl = 'https://www.endclothing.com/kr/brands/a-p-c';
+    scraper.job = { brandName: 'adidas' };
+    const wantUrl = 'https://www.urbanindustry.co.uk/collections/adidas-originals';
     const gotUrl = scraper.getUrl();
     expect(gotUrl).toBe(wantUrl);
   });
@@ -33,26 +33,26 @@ describe(('Consortium List SubScraper '), async () => {
 
   test('should extract Raw Cards', async () => {
     const locators = await scraper.extractRawCards();
-    expect(locators.length).toBe(480);
+    expect(locators.length).toBe(24);
   });
 
   test('should extract Price Data', async () => {
     const locators = await scraper.extractRawCards();
-    const { retailPrice, salePrice } = await scraper.extractPriceData(locators[479]);
-    expect(retailPrice).toBe('₩180,285');
-    expect(salePrice).toBe('₩108,171');
-  });
+    const { retailPrice, salePrice } = await scraper.extractPriceData(locators[0]);
+    expect(retailPrice).toBe('₩130,507');
+    expect(salePrice).toBe('₩78,274');
 
-  test('should extract ProductId', async () => {
-    const locators = await scraper.extractRawCards();
-    const productId = await scraper.extractProductId(locators[479]);
-    expect(productId).toBe('IF1111');
+    const {
+      retailPrice: retailPrice2,
+      salePrice: salePrice2,
+    } = await scraper.extractPriceData(locators[9]);
+    expect(retailPrice2).toBe('₩99,782');
+    expect(salePrice2).toBe('₩99,782');
   });
 
   test('should extractDataFromHtml', async () => {
     const locators = await scraper.extractRawCards();
     const arr = await scraper.extractDataFromHtml(locators[0]);
-
     expect(arr).toHaveProperty('productName');
     expect(arr).toHaveProperty('retailPrice');
     expect(arr).toHaveProperty('color');
@@ -60,6 +60,6 @@ describe(('Consortium List SubScraper '), async () => {
 
   test('should extract Cards', async () => {
     const dataList = await scraper.extractCards();
-    expect(dataList.length).toBe(480);
+    expect(dataList.length).toBe(24);
   });
 });
