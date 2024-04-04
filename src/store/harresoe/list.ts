@@ -48,7 +48,7 @@ export class HarresoeListScraper extends ListSubScraper {
     const productId = '-';
 
     return {
-      brand: brandName!,
+      brand: this.job!.brandName,
       productName: `${brandName} ${productName!.toLowerCase().trim()}`,
       productImgUrl: `https:${productImgUrl!}`,
       productUrl: productUrl.href,
