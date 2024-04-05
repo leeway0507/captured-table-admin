@@ -1,0 +1,234 @@
+{
+  "brand_list": [
+    "555 soul",
+    "adidas originals",
+    "avalon athletics",
+    "bls",
+    "butter goods",
+    "calvin klein",
+    "carhartt wip",
+    "carhartt wip\n                                                                women",
+    "chinatown market",
+    "clarks",
+    "columbia",
+    "corrupt",
+    "crep protect",
+    "daily paper",
+    "dickies",
+    "doppia corsia",
+    "ea7 - emporio armani",
+    "flexfit",
+    "halo",
+    "halo women",
+    "hermanos koumori",
+    "huf",
+    "indystry",
+    "jungles jungles",
+    "karl kani",
+    "lacoste",
+    "le baiser",
+    "les deux",
+    "messyweekend",
+    "nanga",
+    "new era",
+    "new mags",
+    "non-sens",
+    "obey",
+    "parlez",
+    "pas de mer",
+    "playboy",
+    "pleasures",
+    "polo ralph lauren",
+    "preach",
+    "quint",
+    "reebok",
+    "refrigiwear",
+    "saddler",
+    "saucony",
+    "secrid",
+    "shaka",
+    "sniff",
+    "static",
+    "stüssy",
+    "the north face",
+    "vans",
+    "wood wood",
+    "yab studio"
+  ],
+  "data": [
+    {
+      "store_name": "quint",
+      "brand_name": "555 soul",
+      "brand_url": "https://www.quint-shop.com/en/designers/555-soul"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "adidas originals",
+      "brand_url": "https://www.quint-shop.com/en/designers/adidas-originals"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "avalon athletics",
+      "brand_url": "https://www.quint-shop.com/en/designers/avalon-athletics"
+    },
+    { "store_name": "quint", "brand_name": "bls", "brand_url": "https://www.quint-shop.com/en/designers/bls" },
+    {
+      "store_name": "quint",
+      "brand_name": "butter goods",
+      "brand_url": "https://www.quint-shop.com/en/designers/butter-goods"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "calvin klein",
+      "brand_url": "https://www.quint-shop.com/en/designers/calvin-klein"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "carhartt wip",
+      "brand_url": "https://www.quint-shop.com/en/designers/carhartt-wip"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "carhartt wip\n                                                                women",
+      "brand_url": "https://www.quint-shop.com/en/designers/carhartt-wip-women"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "chinatown market",
+      "brand_url": "https://www.quint-shop.com/en/designers/market"
+    },
+    { "store_name": "quint", "brand_name": "clarks", "brand_url": "https://www.quint-shop.com/en/designers/clarks" },
+    {
+      "store_name": "quint",
+      "brand_name": "columbia",
+      "brand_url": "https://www.quint-shop.com/en/designers/columbia"
+    },
+    { "store_name": "quint", "brand_name": "corrupt", "brand_url": "https://www.quint-shop.com/en/designers/corrupt" },
+    {
+      "store_name": "quint",
+      "brand_name": "crep protect",
+      "brand_url": "https://www.quint-shop.com/en/designers/crep-protect"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "daily paper",
+      "brand_url": "https://www.quint-shop.com/en/designers/daily-paper"
+    },
+    { "store_name": "quint", "brand_name": "dickies", "brand_url": "https://www.quint-shop.com/en/designers/dickies" },
+    {
+      "store_name": "quint",
+      "brand_name": "doppia corsia",
+      "brand_url": "https://www.quint-shop.com/en/designers/doppia-corsia"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "ea7 - emporio armani",
+      "brand_url": "https://www.quint-shop.com/en/designers/ea7"
+    },
+    { "store_name": "quint", "brand_name": "flexfit", "brand_url": "https://www.quint-shop.com/en/designers/flexfit" },
+    { "store_name": "quint", "brand_name": "halo", "brand_url": "https://www.quint-shop.com/en/designers/halo" },
+    {
+      "store_name": "quint",
+      "brand_name": "halo women",
+      "brand_url": "https://www.quint-shop.com/en/designers/halo-women"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "hermanos koumori",
+      "brand_url": "https://www.quint-shop.com/en/designers/hermanos-koumori"
+    },
+    { "store_name": "quint", "brand_name": "huf", "brand_url": "https://www.quint-shop.com/en/designers/huf" },
+    {
+      "store_name": "quint",
+      "brand_name": "indystry",
+      "brand_url": "https://www.quint-shop.com/en/designers/indystry"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "jungles jungles",
+      "brand_url": "https://www.quint-shop.com/en/designers/jungles-jungles"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "karl kani",
+      "brand_url": "https://www.quint-shop.com/en/designers/karl-kani"
+    },
+    { "store_name": "quint", "brand_name": "lacoste", "brand_url": "https://www.quint-shop.com/en/designers/lacoste" },
+    {
+      "store_name": "quint",
+      "brand_name": "le baiser",
+      "brand_url": "https://www.quint-shop.com/en/designers/le-baiser"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "les deux",
+      "brand_url": "https://www.quint-shop.com/en/designers/les-deux"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "messyweekend",
+      "brand_url": "https://www.quint-shop.com/en/designers/messyweekend"
+    },
+    { "store_name": "quint", "brand_name": "nanga", "brand_url": "https://www.quint-shop.com/en/designers/nanga" },
+    { "store_name": "quint", "brand_name": "new era", "brand_url": "https://www.quint-shop.com/en/designers/new-era" },
+    {
+      "store_name": "quint",
+      "brand_name": "new mags",
+      "brand_url": "https://www.quint-shop.com/en/designers/new-mags"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "non-sens",
+      "brand_url": "https://www.quint-shop.com/en/designers/non-sens"
+    },
+    { "store_name": "quint", "brand_name": "obey", "brand_url": "https://www.quint-shop.com/en/designers/obey" },
+    { "store_name": "quint", "brand_name": "parlez", "brand_url": "https://www.quint-shop.com/en/designers/parlez" },
+    {
+      "store_name": "quint",
+      "brand_name": "pas de mer",
+      "brand_url": "https://www.quint-shop.com/en/designers/pas-de-mer"
+    },
+    { "store_name": "quint", "brand_name": "playboy", "brand_url": "https://www.quint-shop.com/en/designers/playboy" },
+    {
+      "store_name": "quint",
+      "brand_name": "pleasures",
+      "brand_url": "https://www.quint-shop.com/en/designers/pleasures"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "polo ralph lauren",
+      "brand_url": "https://www.quint-shop.com/en/designers/polo-ralph-lauren"
+    },
+    { "store_name": "quint", "brand_name": "preach", "brand_url": "https://www.quint-shop.com/en/designers/preach" },
+    { "store_name": "quint", "brand_name": "quint", "brand_url": "https://www.quint-shop.com/en/designers/q" },
+    { "store_name": "quint", "brand_name": "reebok", "brand_url": "https://www.quint-shop.com/en/designers/reebok" },
+    {
+      "store_name": "quint",
+      "brand_name": "refrigiwear",
+      "brand_url": "https://www.quint-shop.com/en/designers/refrigiwear"
+    },
+    { "store_name": "quint", "brand_name": "saddler", "brand_url": "https://www.quint-shop.com/en/designers/saddler" },
+    { "store_name": "quint", "brand_name": "saucony", "brand_url": "https://www.quint-shop.com/en/designers/saucony" },
+    { "store_name": "quint", "brand_name": "secrid", "brand_url": "https://www.quint-shop.com/en/designers/secrid" },
+    { "store_name": "quint", "brand_name": "shaka", "brand_url": "https://www.quint-shop.com/en/designers/shaka" },
+    { "store_name": "quint", "brand_name": "sniff", "brand_url": "https://www.quint-shop.com/en/designers/sniff" },
+    { "store_name": "quint", "brand_name": "static", "brand_url": "https://www.quint-shop.com/en/designers/static" },
+    { "store_name": "quint", "brand_name": "stüssy", "brand_url": "https://www.quint-shop.com/en/designers/stussy" },
+    {
+      "store_name": "quint",
+      "brand_name": "the north face",
+      "brand_url": "https://www.quint-shop.com/en/designers/the-north-face"
+    },
+    { "store_name": "quint", "brand_name": "vans", "brand_url": "https://www.quint-shop.com/en/designers/vans" },
+    {
+      "store_name": "quint",
+      "brand_name": "wood wood",
+      "brand_url": "https://www.quint-shop.com/en/designers/wood-wood"
+    },
+    {
+      "store_name": "quint",
+      "brand_name": "yab studio",
+      "brand_url": "https://www.quint-shop.com/en/designers/yab-studio"
+    }
+  ]
+}

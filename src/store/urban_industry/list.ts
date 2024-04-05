@@ -91,6 +91,9 @@ export class UrbanIndustryListScraper extends ListSubScraper {
     const emptyFunction = () => {};
     emptyFunction();
   }
+  async afterNextClick() {
+    // No Action Needed
+  }
   /* v8 ignore stop */
 }
 

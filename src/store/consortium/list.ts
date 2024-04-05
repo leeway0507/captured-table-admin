@@ -126,6 +126,10 @@ export class ConsortiumListScraper extends ListSubScraper {
       await this.page.waitForSelector(selector, { state: 'hidden' });
     }
   }
+
+  async afterNextClick() {
+    // No Action Needed
+  }
   /* v8 ignore stop */
 }
 

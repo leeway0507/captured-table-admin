@@ -1,17 +1,17 @@
 import { describe, expect, test } from 'vitest';
 import path from 'path';
-
-import { EndclothingListScraper } from './list';
+import fs from 'fs';
+import { QuintListScraper } from './list';
 
 const mockHtmlPath = path.resolve(__dirname, './list.html');
 const localUrl = `file://${mockHtmlPath}`;
 
-describe(('Consortium List SubScraper '), async () => {
-  const scraper = new EndclothingListScraper();
+describe(('Quint List SubScraper '), async () => {
+  const scraper = new QuintListScraper();
   const headless = true;
   await scraper.initBrowser(headless);
   await scraper.page.goto(localUrl);
-  scraper.job = { brandName: 'a.p.c.' };
+  scraper.job = { brandName: 'adidas' };
   //   await scraper.loadingWait();
 
   test('should get store brand data ', () => {
@@ -21,8 +21,8 @@ describe(('Consortium List SubScraper '), async () => {
   });
 
   test('should get url', () => {
-    scraper.job = { brandName: 'a.p.c.' };
-    const wantUrl = 'https://www.endclothing.com/kr/brands/a-p-c';
+    scraper.job = { brandName: 'adidas' };
+    const wantUrl = 'https://www.quint-shop.com/en/designers/adidas-originals';
     const gotUrl = scraper.getUrl();
     expect(gotUrl).toBe(wantUrl);
   });
@@ -34,20 +34,7 @@ describe(('Consortium List SubScraper '), async () => {
 
   test('should extract Raw Cards', async () => {
     const locators = await scraper.extractRawCards();
-    expect(locators.length).toBe(480);
-  });
-
-  test('should extract Price Data', async () => {
-    const locators = await scraper.extractRawCards();
-    const { retailPrice, salePrice } = await scraper.extractPriceData(locators[479]);
-    expect(retailPrice).toBe('₩180,285');
-    expect(salePrice).toBe('₩108,171');
-  });
-
-  test('should extract ProductId', async () => {
-    const locators = await scraper.extractRawCards();
-    const productId = await scraper.extractProductId(locators[479]);
-    expect(productId).toBe('IF1111');
+    expect(locators.length).toBe(48);
   });
 
   test('should extractDataFromHtml', async () => {
@@ -61,6 +48,10 @@ describe(('Consortium List SubScraper '), async () => {
 
   test('should extract Cards', async () => {
     const dataList = await scraper.extractCards();
-    expect(dataList.length).toBe(480);
+    expect(dataList.length).toBe(48);
+  });
+  test('should save result', async () => {
+    const dataList = await scraper.extractCards();
+    fs.writeFileSync(path.join(__dirname, 'mock.json'), JSON.stringify(dataList));
   });
 });
