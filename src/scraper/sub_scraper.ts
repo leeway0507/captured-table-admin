@@ -138,33 +138,39 @@ class SubScraper<T extends object> {
     const result = await this.extractCards();
     scrapData.push(...result);
 
-    const pagepageNationCount = pageNation + 1;
+    const pageNationCount = pageNation + 1;
     const nextPage = await this.hasNextPage();
 
-    if (nextPage && pagepageNationCount < this.options.maxPagination) {
+    if (nextPage && pageNationCount < this.options.maxPagination) {
       await nextPage.click();
-      this.afterNextClick();
-      const nextPageResult = await this.executePageScrap(scrapData);
+      await this.afterNextClick();
+      const nextPageResult = await this.executePageScrap(scrapData, pageNationCount);
       return nextPageResult;
     }
     return scrapData;
   }
   /* v8 ignore stop */
 
-  async scrollYPage(count: number = 0) {
+  async scrollYPage(c: number = 0) {
     if (this.options.scrollCount === 0) return;
 
-    const randomNumber = this.getRandomInt(400, 1000);
+    const boxY = await this.hasNextPage().then(async (r) => r?.boundingBox().then((r2) => r2?.y));
+    const randomNumber = boxY && boxY < 1000 ? boxY : this.getRandomInt(400, 1000);
+
     await this.page.evaluate((num: number) => {
       /* v8 ignore next */
       window.scrollBy(0, num);
     }, randomNumber);
 
     await this.browserWait();
-    const scrollCount = count + 1;
+    const sc = c + 1;
 
-    if (scrollCount < this.options.scrollCount) {
-      await this.scrollYPage(scrollCount);
+    if (boxY && boxY < 0) {
+      return;
+    }
+
+    if (sc < this.options.scrollCount) {
+      await this.scrollYPage(sc);
     }
   }
 
@@ -187,11 +193,12 @@ class SubScraper<T extends object> {
     return { status: 'fail', data: [] };
   }
 
-  async browserWait() {
-    await this.page.waitForTimeout(this.getRandomInt(200, 1000));
+  async browserWait(time:number = this.getRandomInt(200, 1000)) {
+    await this.page.waitForTimeout(time);
   }
 
   async loadingWait() {
+    console.log('watingNetworkLdle');
     await this.page.waitForLoadState('networkidle');
   }
   /* v8 ignore stop */

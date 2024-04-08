@@ -12,7 +12,7 @@ class MainBatcher {
     scraper: SubScraperInterface,
     targetBrand: string,
     savePath: string = path.join(
-      process.env.PIPELINE!,
+      process.env.PIPELINE_SCRAP!,
       scraper.options.storeName,
       scraper.options.scrapType,
     ),

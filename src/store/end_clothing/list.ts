@@ -1,5 +1,4 @@
 import { Locator } from 'playwright';
-import path from 'path';
 import { ProductProps, StoreBrandDataProps } from '../../scraper/sub_scraper';
 import ListSubScraper from '../../scraper/list/list_sub_scraper';
 import brandData from './brand_list.json';
@@ -7,9 +6,9 @@ import brandData from './brand_list.json';
 export class EndclothingListScraper extends ListSubScraper {
   constructor() {
     super({
-      scrollCount: 15,
-      maxPagination: 30,
-      storeName: 'end_clothing',
+      scrollCount: 20,
+      maxPagination: 10,
+      storeName: 'endclothing',
       scrapType: 'list',
     });
   }
@@ -20,11 +19,16 @@ export class EndclothingListScraper extends ListSubScraper {
     return brandData.data;
   }
 
+  async hasNextPage(): Promise<Locator | null> {
+    const selector = '//div[contains(@class,"LoadMoreButton__LoadMoreButtonWrapperSC")]';
+    const loc = this.page.locator(selector);
+    return (await loc.isVisible()) ? loc : null;
+  }
+
   async extractCards(): Promise<ProductProps[]> {
     const locators = await this.extractRawCards();
     const promList = locators.map((l) => this.extractDataFromHtml(l));
     const dataList = await Promise.all(promList);
-    await this.scrollUp();
 
     return dataList;
   }
@@ -50,12 +54,12 @@ export class EndclothingListScraper extends ListSubScraper {
       brand: this.job!.brandName,
       productName: `${productName} ${productId}`,
       productImgUrl: productImgUrl!,
-      productUrl: path.join('https://www.endclothing_.com', productUrl!),
+      productUrl: new URL(productUrl!, 'https://www.endclothing.com').href,
       currencyCode: 'KRW',
       retailPrice,
       salePrice,
       isSale,
-      productId: productId!,
+      productId: productId?.toLowerCase()!,
       color: color!.replaceAll('&', '/'),
     };
   }
@@ -82,12 +86,6 @@ export class EndclothingListScraper extends ListSubScraper {
     return productId;
   }
 
-  async hasNextPage(): Promise<Locator | null> {
-    const selector = '//div[contains(@class,"LoadMoreButton__LoadMoreButtonWrapperSC")]';
-    const loc = this.page.locator(selector);
-    return (await loc.isVisible()) ? loc : null;
-  }
-
   /* v8 ignore start */
   // hot test에서 수동으로 수행하므로 coverage에서 제외
   async handleCookies(): Promise<void> {
@@ -103,15 +101,15 @@ export class EndclothingListScraper extends ListSubScraper {
     }
   }
   async afterNextClick() {
-    await this.scrollUp();
+    await this.browserWait(this.getRandomInt(4000, 5000));
   }
   async scrollUp() {
-    const randomNumber = -2000;
+    const randomNumber = -6000;
     await this.page.evaluate((num: number) => {
       /* v8 ignore next */
       window.scrollBy(0, num);
     }, randomNumber);
-    await this.loadingWait();
+    await this.browserWait();
   }
   /* v8 ignore stop */
 }
