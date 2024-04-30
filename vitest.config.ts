@@ -7,7 +7,7 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'html'],
     },
-    testTimeout: 20000,
+    testTimeout: 30000,
 
   },
 });

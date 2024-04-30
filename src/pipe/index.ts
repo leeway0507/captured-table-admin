@@ -6,6 +6,8 @@ import NewHarresoeListScraper from '../store/harresoe/list';
 import NewUrbanIndustryListScraper from '../store/urban_industry/list';
 import NewQuintListScraper from '../store/quint/list';
 import NewSheltaListScraper from '../store/shelta/list';
+import NewOneBlockDownListScraper from '../store/oneblockdown/list';
+import NewSlamJamListScraper from '../store/slamjam/list';
 import 'dotenv/config';
 
 const scraperArr = {
@@ -15,6 +17,8 @@ const scraperArr = {
   urban_industry: NewUrbanIndustryListScraper,
   quint: NewQuintListScraper,
   shelta: NewSheltaListScraper,
+  oneblockdown: NewOneBlockDownListScraper,
+  slamjam: NewSlamJamListScraper,
 
 };
 

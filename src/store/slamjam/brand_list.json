@@ -1,0 +1,30 @@
+{
+  "brand_list": ["asics", "needles", "adidas", "keen", "nike", "birkenstock", "acne studios", "new balance", "custom"],
+  "data": [
+    {
+      "store_name": "slamjam",
+      "brand_name": "asics",
+      "brand_url": "https://slamjam.com/collections/asics-men"
+    },
+    {
+      "store_name": "slamjam",
+      "brand_name": "new balance",
+      "brand_url": "https://slamjam.com/collections/new-balance-men"
+    },
+    {
+      "store_name": "slamjam",
+      "brand_name": "custom",
+      "brand_url": "https://slamjam.com/collections/clearance?filters-brand=acne-studios,adidas,asics,birkenstock,hoka-one-one,keen,maison-mihara-yasuhiro,needles,new-balance,nike"
+    },
+    {
+      "store_name": "slamjam",
+      "brand_name": "custom-women",
+      "brand_url": "https://slamjam.com/collections/clearance-women?filters-brand=acne-studios,adidas,asics,birkenstock,hoka-one-one,keen,maison-mihara-yasuhiro,needles,new-balance,nike"
+    },
+    {
+      "store_name": "slamjam",
+      "brand_name": "nike",
+      "brand_url": "https://slamjam.com/collections/nike-men"
+    }
+  ]
+}

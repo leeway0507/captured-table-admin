@@ -4,9 +4,9 @@ import path from 'path';
 import BrandListExtractor from './extract_brand_list';
 import { checkFileExist, deleteFile } from '../test_utils';
 
-const storeName = 'mock';
-const defaultUrl = 'https://www.quint-shop.com/en/';
-const pattern = '.brandlist__name';
+const storeName = 'slamjam';
+const defaultUrl = 'https://slamjam.com/';
+const pattern = 'li.all-brands__brand';
 const p = path.join(__dirname, `${storeName}.json`);
 
 describe(('Extract Brand List'), async () => {
@@ -22,12 +22,12 @@ describe(('Extract Brand List'), async () => {
   });
   test('should get BrandObj[]', () => {
     const got = scraper.extractInfo();
-    expect(got.length).toBe(54);
+    expect(got.length).toBe(203);
   });
   test('should get BrandList', () => {
     const data = scraper.extractInfo();
     const got = scraper.extractBrandList(data);
-    expect(got.length).toBe(54);
+    expect(got.length).toBe(203);
   });
   test('should save file', () => {
     const data = scraper.extractInfo();
